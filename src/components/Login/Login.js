@@ -1,77 +1,73 @@
+import validator from 'validator'
 import { Container, Row, Col } from "react-bootstrap";
 import "./Login.css";
 import Libros from "../../Assets/Images/libros.png";
 const { useEffect, useState } = require("react");
 
-const API_URL = 'http://localhost:3000/login';
+
+const API_URL = "http://localhost:3000/login";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  console.log(password)
 
   const validate = () => {
     const errors = {};
-    if (!email) errors.email = "El usuario es requerido";
+    if(!validator.isEmail(email)) errors.email = "El formato de email no es el correcto"
     if (!password) errors.password = "La contraseña es requerida";
-    if (password.length < 6)
+    if (password.length < 6) {
       errors.password = "La contraseña debe tener al menos 6 caracteres";
+    } else {
+      delete errors[password]; // Eliminar el error de la contraseña si cumple con los requisitos
+    }
     return errors;
   };
 
   const sendData = async () => {
     if (email !== "" && password !== "") {
-
       if (password.length < 6) {
-        setErrors({ password: "La contraseña debe tener al menos 6 caracteres" });
+        setErrors({
+          password: "La contraseña debe tener al menos 6 caracteres",
+        });
         return;
       }
 
       try {
-
-
         const datosEnviados = { email, password };
-        console.log(API_URL)
-        const response = await fetch({API_URL}, {
-          method: 'POST',
+        const response = await fetch(API_URL, {
+          method: "POST",
           body: JSON.stringify(datosEnviados),
           headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-
+            "Content-Type": "application/json",
+          },
+        });
 
         if (!response.ok) {
-
           throw new Error("La red no responde");
-
         }
-        console.log(datosEnviados)
-
         const data = await response.json();
-        sessionStorage.setItem('token', data.token);
-        console.log("Por Dios bendito: ", data);
+        sessionStorage.setItem("token", data.token);
         //navigate('/');
-        
       } catch (error) {
-        console.error("Tenemos un problema con el inicio de sesión:", error);
+        //console.error("Tenemos un problema con el inicio de sesión:", error);
       }
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validate();
-    if (Object.keys(errors).length === 0) {
-
+    if (errors === null) {
       console.log("Enviar datos de registro", { email, password });
       sendData();
+      setErrors({}); // Restablecer los errores a un objeto vacío
     } else {
       setErrors(errors);
     }
   };
+  
 
   return (
     <>
@@ -92,19 +88,35 @@ export default function Login() {
               <Col className="user_name">
                 <label>
                   Users name or email:
-                  <input type="text" name="name" onChange={(e) => setEmail(e.target.value)}/>
-                  {errors.user && <span>{errors.user}</span>}
+                  <input
+                    type="text"
+                    name="name"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  {errors.email && <span>{errors.email}</span>}
                 </label>
               </Col>
               <Col className="password">
                 <label>
-                  password
-                  <input type="text" name="password" onChange={(e) => setPassword(e.target.value)} />
-                  {errors.user && <span>{errors.user}</span>}
+                  <Row>
+                    password
+                    <Col>
+                      <input
+                        type="text"
+                        name="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      {errors.password && <span>{errors.password}</span>}
+                    </Col>
+                  </Row>
                 </label>
               </Col>
               <Col>
-                <button type="button" class="btn btn-primary" className="button-sing-up" onClick={handleSubmit}>
+                <button
+                  type="button"
+                  className="button-sing-up"
+                  onClick={handleSubmit}
+                >
                   Sign up
                 </button>
               </Col>
