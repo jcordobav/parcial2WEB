@@ -33,8 +33,8 @@ export default function Login() {
 
 
         const datosEnviados = { email, password };
-
-        const response = await fetch(`${API_URL}/auth/login`, {
+        console.log(API_URL)
+        const response = await fetch({API_URL}, {
           method: 'POST',
           body: JSON.stringify(datosEnviados),
           headers: {
