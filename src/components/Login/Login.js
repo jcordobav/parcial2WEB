@@ -1,9 +1,9 @@
-import validator from 'validator'
+import { Link, useNavigate } from "react-router-dom";
+import validator from "validator";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Login.css";
 import Libros from "../../Assets/Images/libros.png";
 const { useEffect, useState } = require("react");
-
 
 const API_URL = "http://localhost:3000/login";
 
@@ -11,11 +11,14 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
+  const navigate = useNavigate();
 
   const validate = () => {
     const errors = {};
-    if(!validator.isEmail(email)) errors.email = "El formato de email no es el correcto"
+    if (!validator.isEmail(email))
+      errors.email = "El formato de email no es el correcto";
     if (!password) errors.password = "La contraseña es requerida";
     if (password.length < 6) {
       errors.password = "La contraseña debe tener al menos 6 caracteres";
@@ -49,25 +52,28 @@ export default function Login() {
         }
         const data = await response.json();
         sessionStorage.setItem("token", data.token);
-        //navigate('/');
-      } catch (error) {
-        //console.error("Tenemos un problema con el inicio de sesión:", error);
-      }
+      } catch (error) {}
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validate();
-    if (errors === null) {
-      console.log("Enviar datos de registro", { email, password });
+    if (Object.entries(errors).length === 0) {
+      setShouldRedirect(true);
       sendData();
-      setErrors({}); // Restablecer los errores a un objeto vacío
+      setErrors({});
     } else {
       setErrors(errors);
+      setShouldRedirect(false);
     }
   };
-  
+
+  useEffect(() => {
+    if (shouldRedirect) {
+      navigate("/home");
+    }
+  }, [shouldRedirect]);
 
   return (
     <>
@@ -117,7 +123,7 @@ export default function Login() {
                   className="button-sing-up"
                   onClick={handleSubmit}
                 >
-                  Sign up
+                  Sign in
                 </button>
               </Col>
             </Col>

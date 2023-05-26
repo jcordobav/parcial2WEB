@@ -7,8 +7,8 @@ export default function NoteCard({ title, createdDate, noteLogo }) {
   };
 
   return (
-    <div class="card" style={cardStyle}>
+    <Container>
       
-    </div>
+    </Container>
   );
 }
