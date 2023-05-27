@@ -1,4 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { AuthContext } from '../../AuthContext';
+import { useNavigate } from "react-router-dom";
 import validator from "validator";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Login.css";
@@ -8,22 +11,23 @@ const { useEffect, useState } = require("react");
 const API_URL = "http://localhost:3000/login";
 
 export default function Login() {
+    const { setUserRole } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  
 
   const navigate = useNavigate();
 
   const validate = () => {
     const errors = {};
     if (!validator.isEmail(email))
-      errors.email = "El formato de email no es el correcto";
-    if (!password) errors.password = "La contraseña es requerida";
+      errors.email = <FormattedMessage id="format_email"/>;
     if (password.length < 6) {
-      errors.password = "La contraseña debe tener al menos 6 caracteres";
+      errors.password = <FormattedMessage id="format_password"/>;
     } else {
-      delete errors[password]; // Eliminar el error de la contraseña si cumple con los requisitos
+      delete errors[password]; 
     }
     return errors;
   };
@@ -32,7 +36,7 @@ export default function Login() {
     if (email !== "" && password !== "") {
       if (password.length < 6) {
         setErrors({
-          password: "La contraseña debe tener al menos 6 caracteres",
+          password: <FormattedMessage id="format_password"/>,
         });
         return;
       }
@@ -51,7 +55,7 @@ export default function Login() {
           throw new Error("La red no responde");
         }
         const data = await response.json();
-        sessionStorage.setItem("token", data.token);
+        setUserRole(data.rol)
       } catch (error) {}
     }
   };
@@ -76,7 +80,6 @@ export default function Login() {
   }, [shouldRedirect]);
 
   return (
-    <>
       <Container className="container_principal">
         <Container className="container_secundario">
           <Row className="row_login">
@@ -85,15 +88,15 @@ export default function Login() {
                 <img src={Libros} alt="" className="footer__img" />
               </Col>
               <Col className="col_img_text">
-                Encuentra hasta el libro que no estabas buscando
+              <FormattedMessage id="title_login"/>
               </Col>
             </Col>
 
             <Col className="col_login">
-              <Col className="title">Tu Libreria Aliada</Col>
+              <Col className="title"><FormattedMessage id="allied_library"/></Col>
               <Col className="user_name">
                 <label>
-                  Users name or email:
+                <FormattedMessage id="user_text"/>
                   <input
                     type="text"
                     name="name"
@@ -105,12 +108,13 @@ export default function Login() {
               <Col className="password">
                 <label>
                   <Row>
-                    password
+                  <FormattedMessage id="password"/>
                     <Col>
                       <input
-                        type="text"
+                        type="password"
                         name="password"
                         onChange={(e) => setPassword(e.target.value)}
+                        password = {true}
                       />
                       {errors.password && <span>{errors.password}</span>}
                     </Col>
@@ -123,13 +127,12 @@ export default function Login() {
                   className="button-sing-up"
                   onClick={handleSubmit}
                 >
-                  Sign in
+                  <FormattedMessage id="sign_in"/>
                 </button>
               </Col>
             </Col>
           </Row>
         </Container>
       </Container>
-    </>
   );
 }

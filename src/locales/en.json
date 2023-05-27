@@ -1,0 +1,22 @@
+{
+    "format_email": "The email format is not correct",
+    "format_password": "The password must be at least 6 characters",
+    "title_login": "Find even the book you weren't looking for",
+    "allied_library": "Your Allied Library",
+    "user_text": "Email:",
+    "password": "password",
+    "sign_in": "Sign in",
+    "no_selected_card": "No book selected",
+    "author": "Author",
+    "publisher": "Publisher",
+    "genre": "Genre",
+    "travel": "Travel",
+    "year": "Year",
+    "2020": "2020",
+    "available_online": "Available online",
+    "yes": "Yes",
+    "50": "$50,000",
+    "large_text": "Regarding the home view, it will be divided into three equal parts horizontally. The first two parts will contain a matrix where you can see all the available books.",
+    "price": "Price",
+    "summary": "summary"
+}

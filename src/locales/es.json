@@ -1,0 +1,22 @@
+{
+    "format_email": "El formato de email no es el correcto",
+    "format_password": "La contraseña debe tener al menos 6 caracteres",
+    "title_login": "Encuentra hasta el libro que no estabas buscando",
+    "allied_library": "Tu Libreria Aliada",
+    "user_text": "Correo electronico:",
+    "password": "contraseña",
+    "sign_in": "Iniciar sesión",
+    "no_selected_card": "No hay ningún libro seleccionado",
+    "author": "Autor",
+    "publisher": "Editorial",
+    "genre": "Genero",
+    "travel": "Viajes",
+    "year": "Año",
+    "2020": "2020",
+    "available_online": "Disponible en linea",
+    "yes": "Si",
+    "50": "$50.000",
+    "large_text": "Respecto a la vista de home, estará dividida en tres partes iguales en sentido horizontal. Las primeras dos partes contendrán una matrizdonde se puedan ver todos los libros disponibles.",
+    "price": "Precio",
+    "summary": "Resumen"
+}
