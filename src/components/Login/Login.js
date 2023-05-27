@@ -80,12 +80,13 @@ export default function Login() {
   }, [shouldRedirect]);
 
   return (
-      <Container className="container_principal">
-        <Container className="container_secundario">
+      <div className="container_principal">
+        <div className="container_secundario">
           <Row className="row_login">
             <Col className="col_img">
               <Col className="col_img_detail">
-                <img src={Libros} alt="" className="footer__img" />
+                <img src={Libros} alt="" className="footer__img" width="50%" 
+     height="60%" />
               </Col>
               <Col className="col_img_text">
               <FormattedMessage id="title_login"/>
@@ -132,7 +133,7 @@ export default function Login() {
               </Col>
             </Col>
           </Row>
-        </Container>
-      </Container>
+        </div>
+      </div>
   );
 }

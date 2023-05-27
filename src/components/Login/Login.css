@@ -1,30 +1,40 @@
 .container_principal {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  justify-content: center; /* Centra los hijos horizontalmente */
+  align-items: center; /* Centra los hijos verticalmente */
+  height: 100vh;
   background: gray;
 }
 
 .container_secundario {
-  position: relative;
-  margin: 30%;
+  width: 80%; /* Donde 60px es la suma total de tus márgenes izquierdo y derecho */
+  height: 80%; /* Donde 60px es la suma total de tus márgenes superior e inferior */
+}
+
+.row_login {
+  width: 80%;
+  margin: 0;
 }
 
 .col_img {
   background: rgb(193, 186, 186);
+}
+.footer__img {
+  margin: 3%;
 }
 
 .col_img_text {
   font-style: normal;
   font-weight: 400;
   font-size: 60px;
+  height: 100%;
 }
 
 .col_login {
   align-self: center;
   background: rgb(255, 255, 255);
   width: 100%;
-  height: 100% !important;
+  height: 100%;
 }
 
 .title {
@@ -34,5 +44,10 @@
 }
 
 .button-sing-up {
-    background: gray;
+  background: gray;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
